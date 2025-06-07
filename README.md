@@ -60,6 +60,62 @@ python main.py
 
 ---
 
+## 🧠 System Architecture
+
+The following diagram describes the flow of data and modules involved in this project:
+
+```mermaid
+flowchart TD
+    subgraph "Runtime Pipeline"
+        direction TB
+        Webcam["Input Device: Webcam"]:::input
+        Video["Video Capture Module (OpenCV)"]:::processing
+        FaceMesh["FaceMesh Engine (MediaPipe)"]:::processing
+        subgraph "Landmark Processor"
+            direction TB
+            EyeMap["Eye-movement mapper"]:::processing
+            BlinkDet["Blink detector (threshold <0.004)"]:::processing
+        end
+        Cursor["Cursor Controller (PyAutoGUI)"]:::actuation
+        CLI["User Interface/CLI (exit key)"]:::control
+    end
+
+    Webcam -->|"video frame"| Video
+    Video -->|"video frame"| FaceMesh
+    FaceMesh -->|"landmark coords"| EyeMap
+    FaceMesh -->|"landmark coords"| BlinkDet
+    EyeMap -->|"cursor coords"| Cursor
+    BlinkDet -->|"click event"| Cursor
+    CLI -.->|"exit command"| Webcam
+
+    subgraph "Project Files"
+        direction TB
+        Make["Setup Automation: Makefile"]:::control
+        Req["Dependencies: requirements.txt"]:::control
+        Readme["Documentation: README.md"]:::control
+    end
+
+    click Webcam "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click Video "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click FaceMesh "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click EyeMap "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click BlinkDet "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click Cursor "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click CLI "https://github.com/frosty-8/eye-cursor/blob/main/main.py"
+    click Make "https://github.com/frosty-8/eye-cursor/tree/main/Makefile"
+    click Req "https://github.com/frosty-8/eye-cursor/blob/main/requirements.txt"
+    click Readme "https://github.com/frosty-8/eye-cursor/blob/main/README.md"
+
+    classDef input fill:#D0E7FF,stroke:#333,stroke-width:1px
+    classDef processing fill:#D0FFD6,stroke:#333,stroke-width:1px
+    classDef actuation fill:#FFE2B3,stroke:#333,stroke-width:1px
+    classDef control fill:#E0E0E0,stroke:#333,stroke-width:1px
+```
+
+> ☝️ You can view this Mermaid diagram properly on platforms like GitHub (with Mermaid enabled), Obsidian, or VS Code (with Mermaid plugin).
+
+---
+
 ## 🎮 Controls
 
 | Action            | Trigger                            |
@@ -70,15 +126,6 @@ python main.py
 
 ---
 
-## 🧠 How It Works
-
-- MediaPipe’s `FaceMesh` is used to extract face landmarks.
-- Right eye landmarks (ID 474 to 478) control the cursor.
-- Vertical distance between left eye landmarks (145, 159) detects blinking for clicking.
-- `pyautogui` performs system mouse actions based on landmark positions.
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -86,6 +133,7 @@ python main.py
 ├── main.py             # Main application code
 ├── Makefile            # Automation for setup and run
 ├── requirements.txt    # Project dependencies
+├── README.md           # Project documentation
 ```
 
 ---
@@ -109,8 +157,8 @@ python main.py
 ## 🧑‍💻 Author
 
 **Sarthak Dongare**  
-📧 [sarthakdongare8@gmail.com]  
-🌐 [https://my-new-prof.vercel.app/]  
+📧 Mail : [Mail](sarthakdongare8@gmail.com)  
+🌐 Portfolio: [Portfolio](https://my-new-prof.vercel.app/)  
 🐙 GitHub: [@Frosty-8](https://github.com/Frosty-8)
 
 ---
@@ -122,3 +170,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 > ✨ *Built with Python, passion, and a blink of an eye!*
+
+
+
+
+
