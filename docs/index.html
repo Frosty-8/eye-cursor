@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👁️🖱️ Eye Controlled Mouse - Documentation</title>
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --accent: #4776e6;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f0f0f0;
+            --lighter: #ffffff;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: gradientShift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--lighter);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .card {
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-item {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background-color: rgba(50, 50, 50, 0.9);
+            transform: translateX(5px);
+        }
+
+        .code-block {
+            position: relative;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: none;
+            border-radius: 4px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success);
+            color: var(--dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: rgba(40, 40, 40, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background-color: var(--primary);
+            color: var(--lighter);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            margin: 1rem auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-img:hover {
+            transform: scale(1.02);
+        }
+
+        .file-structure {
+            background-color: rgba(30, 30, 30, 0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .author-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(110, 72, 170, 0.2), rgba(157, 80, 187, 0.2));
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.7);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            background-color: var(--primary);
+            color: var(--lighter);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1.5rem 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="animate-pulse">
+        <div class="container">
+            <h1>👁️🖱️ Eye Controlled Mouse</h1>
+            <p>A Python-based computer vision project that lets you control your mouse using your eyes!</p>
+            <div style="margin-top: 1rem;">
+                <span class="tag">Python</span>
+                <span class="tag">Computer Vision</span>
+                <span class="tag">MediaPipe</span>
+                <span class="tag">OpenCV</span>
+                <span class="tag">PyAutoGUI</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="card">
+            <h2>📦 Project Overview</h2>
+            <p>This innovative Python application enables hands-free computer interaction by tracking eye movements and blinks to control the mouse cursor. Built with cutting-edge computer vision libraries, it provides an accessible interface for users who may have difficulty with traditional input devices.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h3>✅ Real-time Tracking</h3>
+                    <p>Uses MediaPipe's FaceMesh for precise facial landmark detection at 60+ FPS.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🧠 Intelligent Control</h3>
+                    <p>Maps eye movements to cursor position with smooth interpolation.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>👁️ Blink Detection</h3>
+                    <p>Accurately detects blinks as click events with adjustable sensitivity.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔁 Optimized Pipeline</h3>
+                    <p>Efficient processing pipeline for responsive performance even on modest hardware.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📸 Demo</h2>
+            <img src="https://user-images.githubusercontent.com/your-image-here.gif" alt="Eye Controlled Mouse Demo" class="demo-img animate-float">
+            <p style="text-align: center; font-style: italic;">Demo showing eye tracking and blink-to-click functionality</p>
+        </section>
+
+        <section class="card">
+            <h2>🧰 Installation</h2>
+            <h3>Prerequisites</h3>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Python 3.7+</li>
+                <li>Webcam</li>
+                <li>Windows, macOS, or Linux</li>
+            </ul>
+
+            <h3>Using Makefile (Recommended for Windows)</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>git clone https://github.com/yourusername/eye-controlled-mouse.git
+cd eye-controlled-mouse
+make all</code>
+            </div>
+
+            <h3>Manual Installation</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>git clone https://github.com/yourusername/eye-controlled-mouse.git
+cd eye-controlled-mouse
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python main.py</code>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🧠 System Architecture</h2>
+            <p>The application follows a modular pipeline architecture:</p>
+            <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Webcam Input:</strong> Captures live video feed</li>
+                <li><strong>Face Detection:</strong> MediaPipe FaceMesh identifies facial landmarks</li>
+                <li><strong>Eye Tracking:</strong> Processes eye landmarks to determine gaze direction</li>
+                <li><strong>Blink Detection:</strong> Monitors eyelid landmarks for blink gestures</li>
+                <li><strong>Cursor Control:</strong> PyAutoGUI translates eye data to mouse movements</li>
+            </ol>
+            
+            <h3>Key Thresholds</h3>
+            <ul style="margin-left: 1.5rem;">
+                <li>Blink detection threshold: &lt;0.004 (vertical distance between eyelids)</li>
+                <li>Cursor smoothing: Linear interpolation between frames</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>🎮 Controls</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Trigger</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Move cursor</td>
+                        <td>Move your right eye</td>
+                    </tr>
+                    <tr>
+                        <td>Click</td>
+                        <td>Blink left eye (detects vertical distance between eyelids)</td>
+                    </tr>
+                    <tr>
+                        <td>Exit Program</td>
+                        <td>Press 'Q' on your keyboard</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>📁 Project Structure</h2>
+            <div class="file-structure">
+                <code>frosty-8-eye-cursor/
+├── README.md             # Project documentation
+├── main.py               # Main application code
+├── Makefile              # Automation for setup and run
+└── requirements.txt      # Project dependencies</code>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📜 Source Code</h2>
+            <h3>main.py</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>import cv2,pyautogui
+import mediapipe as mp
+
+cam = cv2.VideoCapture(0)
+face_mesh = mp.solutions.face_mesh.FaceMesh(refine_landmarks=True)
+screen_w,screen_h = pyautogui.size()
+
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        break
+    
+    frame=cv2.flip(frame,1)
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    output = face_mesh.process(rgb_frame)
+    landmark_points = output.multi_face_landmarks
+    frame_h, frame_w, _ = frame.shape
+
+    if landmark_points:
+        landmarks = landmark_points[0].landmark
+        for id,landmark in enumerate(landmarks[474:478]):
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 0))
+            if id==1:
+                screen_x = screen_w / frame_w * x
+                screen_y = screen_h / frame_h * y
+                pyautogui.moveTo(screen_x,screen_y)
+        left=[landmarks[145],landmarks[159]]
+        for landmark in left:
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 255))          
+        if (left[0].y - left[1].y)<0.004:
+            pyautogui.click()
+            pyautogui.close(1)  
+    cv2.imshow('Eye controlled mouse', frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cam.release()
+cv2.destroyAllWindows()</code>
+            </div>
+
+            <h3>Makefile</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code># Variables
+PYTHON = python
+PIP = pip
+VENV = venv
+MAIN_SCRIPT = main.py
+
+.PHONY: all install run clean
+
+all: install run
+
+install:
+    $(PYTHON) -m venv $(VENV)
+    $(VENV)\Scripts\pip install --upgrade pip
+    $(VENV)\Scripts\pip install -r requirements.txt
+
+install-lib:
+    $(VENV)\Scripts\pip install -r requirements.txt
+
+run:
+    powershell -Command "& { . $(VENV)\Scripts\Activate.ps1; python $(MAIN_SCRIPT) }"
+
+clean:
+    if exist $(VENV) rmdir /s /q $(VENV)
+    if exist __pycache__ rmdir /s /q __pycache__
+    del /s /q *.pyc *.pyo 2>nul</code>
+            </div>
+
+            <h3>requirements.txt</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>pyautogui
+mediapipe
+opencv-python</code>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🐞 Troubleshooting</h2>
+            <h3>Common Issues</h3>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Webcam not detected:</strong> Ensure no other application is using the camera</li>
+                <li><strong>Poor tracking accuracy:</strong> Use in well-lit environments and position face centrally</li>
+                <li><strong>False clicks:</strong> Adjust the blink threshold in main.py (line 26)</li>
+                <li><strong>Performance issues:</strong> Close other resource-intensive applications</li>
+            </ul>
+
+            <h3>Future Improvements</h3>
+            <ul style="margin-left: 1.5rem;">
+                <li>Add support for head movement tracking</li>
+                <li>Implement gesture-based scrolling</li>
+                <li>Create calibration routine for individual users</li>
+                <li>Add multi-monitor support</li>
+                <li>Develop GUI for configuration</li>
+            </ul>
+        </section>
+
+        <div class="author-card">
+            <img src="https://avatars.githubusercontent.com/u/your-avatar" alt="Author" class="author-avatar">
+            <div class="author-info">
+                <h3>🧑‍💻 Author</h3>
+                <p><strong>Sarthak Dongare</strong></p>
+                <p>📧 <a href="mailto:sarthakdongare8@gmail.com">sarthakdongare8@gmail.com</a></p>
+                <p>🌐 <a href="https://my-new-prof.vercel.app/" target="_blank">Portfolio</a></p>
+                <p>🐙 <a href="https://github.com/Frosty-8" target="_blank">GitHub: @Frosty-8</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>This project is licensed under the MIT License</p>
+        <p style="margin-top: 0.5rem;">✨ Built with Python, passion, and a blink of an eye!</p>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('code').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
